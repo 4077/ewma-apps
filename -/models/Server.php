@@ -6,3 +6,15 @@ class Server extends \Model
 
 
 }
+
+class ServerObserver
+{
+    public function creating($model)
+    {
+        $position = Server::max('position') + 10;
+
+        $model->position = $position;
+    }
+}
+
+Server::observe(new ServerObserver);

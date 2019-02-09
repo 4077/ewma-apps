@@ -8,4 +8,21 @@ class Env extends \Model
     {
         return $this->belongsTo(Server::class);
     }
+
+    public function hosts()
+    {
+        return $this->hasMany(Host::class);
+    }
 }
+
+class EnvObserver
+{
+    public function creating($model)
+    {
+        $position = Env::max('position') + 10;
+
+        $model->position = $position;
+    }
+}
+
+Env::observe(new EnvObserver);
